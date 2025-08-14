@@ -3,7 +3,7 @@
 --- 1. Global & Body Styles ---
 =================================
 */
-
+/* ... (existing styles) ... */
 * {
   margin: 0;
   padding: 0;
@@ -20,12 +20,13 @@ body {
   color: #333;
 }
 
+
 /*
 =================================
 --- 2. Main App Component Styles ---
 =================================
 */
-
+/* ... (existing styles) ... */
 .App {
   text-align: center;
   padding: 40px 20px;
@@ -37,13 +38,12 @@ h1 {
   margin-bottom: 40px;
 }
 
-
 /*
 =================================
 --- 3. Page Container Styles ---
 =================================
 */
-
+/* ... (existing styles) ... */
 .page-container {
   max-width: 800px;
   margin: 0 auto;
@@ -62,4 +62,63 @@ h1 {
 .page-container p {
   font-size: 1.1rem;
   line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+
+/*
+=================================
+--- 4. Prompt Form Styles ---
+=================================
+*/
+
+.prompt-form-container {
+  margin-top: 20px;
+}
+
+.prompt-textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 15px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  border: 2px solid #dfe4ea;
+  transition: border-color 0.3s;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.prompt-textarea:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.prompt-button {
+  display: inline-block;
+  background-color: #3498db;
+  color: white;
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.prompt-button:hover:not(:disabled) {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+}
+
+.prompt-button:disabled {
+  background-color: #a4b0be;
+  cursor: not-allowed;
+}
+
+.error-message {
+  color: #e74c3c;
+  margin-top: 15px;
+  font-weight: bold;
 }
