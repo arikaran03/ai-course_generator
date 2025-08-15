@@ -6,7 +6,6 @@ const HomePage = () => {
       <h2>Create a New Course</h2>
       <p>Enter a topic below to get started.</p>
       <PromptForm />
-      {/* The prompt form will go here later */}
     </div>
   );
 };
