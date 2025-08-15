@@ -9,19 +9,16 @@ dotenv.config();
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const generateCourse = async (req, res) => {
-    // For now, we'll just confirm we received the request
-    // We will get the topic from the request body later
-    const { topic } = req.body;
+  // ... (existing generateCourse function code remains the same)
+  const { topic } = req.body;
 
-    if (!topic) {
-        // If no topic is provided, send a 400 Bad Request error
-        return res.status(400).json({ message: 'Please provide a topic' });
-    }
-    // res.send(200).json({ message: 'Received topic', topic });
+  if (!topic) {
+    return res.status(400).json({ message: 'Please provide a topic' });
+  }
 
-    try {
+  try {
     // 1. --- AI Prompt Engineering ---
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
     const prompt = `
       Create a comprehensive course outline about "${topic}".
       The course should have a clear title and a brief, engaging description.
@@ -52,22 +49,19 @@ const generateCourse = async (req, res) => {
     const text = response.text();
 
     // 3. --- Parse the AI Response ---
-    // Clean the response to ensure it's a valid JSON string
     const cleanedJsonString = text.replace(/```json/g, '').replace(/```/g, '').trim();
     const courseData = JSON.parse(cleanedJsonString);
 
     // 4. --- Save to Database ---
-    // Create the main course document
     const newCourse = new Course({
       title: courseData.title,
       description: courseData.description,
-      creator: 'anonymous-user', // Placeholder until auth is added
+      creator: 'anonymous-user',
     });
 
     const savedCourse = await newCourse.save();
     const moduleIds = [];
 
-    // Create module and lesson documents
     for (const moduleData of courseData.modules) {
       const newModule = new Module({
         title: moduleData.title,
@@ -90,23 +84,47 @@ const generateCourse = async (req, res) => {
       moduleIds.push(savedModule._id);
     }
 
-    // Link the modules to the course
     savedCourse.modules = moduleIds;
     await savedCourse.save();
 
     // 5. --- Send Response to Frontend ---
     res.status(201).json({
       message: 'Course generated and saved successfully!',
-      courseId: savedCourse._id, // Send the new course ID back
+      courseId: savedCourse._id,
     });
   } catch (error) {
     console.error('Error in course generation:', error);
-    // Check for specific AI content filtering issues
-    console.log('this error from generateCourse', error.message);
     if (error.message.includes('SAFETY')) {
          return res.status(400).json({ message: 'The topic triggered the AI\'s safety filters. Please try a different topic.' });
     }
     res.status(500).json({ message: 'An error occurred on the server during course generation.' });
   }
 };
-export default  generateCourse;
+
+const getCourseById = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id).populate({
+      path: 'modules',
+      model: 'Module',
+      populate: {
+        path: 'lessons',
+        model: 'Lesson',
+      },
+    });
+
+    if (course) {
+      // FIX: Add a return statement here to stop execution
+      return res.json(course);
+    } else {
+      // And also add one here for good practice
+      return res.status(404).json({ message: 'Course not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching course:', error);
+    // And here as well
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
+export { generateCourse, getCourseById };

@@ -1,12 +1,10 @@
 import express from 'express';
-import generateCourse  from '../controllers/courseController.js'; 
+import { generateCourse, getCourseById } from '../controllers/courseController.js'; 
 
 const router = express.Router(); 
 
 router.post('/generate', generateCourse);
 
-router.get('/',(req,res) => {
-    res.send("Welcome to the course generation API!"); 
-})
+router.get('/:id', getCourseById);
 
 export default router;

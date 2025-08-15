@@ -10,6 +10,7 @@ const App = () => {
       <div className='App'>
         <h1>Text-to-Learn Course Generator</h1>
 
+          {/* <CoursePage/> */}
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/course/:courseId" element={<CoursePage />} />
