@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams ,Link} from 'react-router-dom';
 import axios from 'axios';
 
 const CoursePage = () => {
@@ -25,8 +25,9 @@ const CoursePage = () => {
           setLoading(false);
         }
       };
-
-      fetchCourse();
+      if(courseId){
+        fetchCourse();
+      }
     }
     // FIX: The dependency array must use the courseId variable from useParams
   }, [courseId]);
@@ -54,9 +55,17 @@ const CoursePage = () => {
             <div key={module._id} className="module-card">
               <h3 className="module-title">{module.title}</h3>
               <ul className="lessons-list">
-                {module.lessons && module.lessons.map((lesson) => (
+                {/* {module.lessons && module.lessons.map((lesson) => (
                   <li key={lesson._id} className="lesson-item">
                     {lesson.title}
+                  </li>
+                ))} */}
+                {module.lessons && module.lessons.map((lesson) => (
+                  // Wrap the list item content in a Link component
+                  <li key={lesson._id} className="lesson-item">
+                    <Link to={`/course/${courseId}/lesson/${lesson._id}`}>
+                      {lesson.title}
+                    </Link>
                   </li>
                 ))}
               </ul>
