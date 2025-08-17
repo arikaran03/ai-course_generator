@@ -208,3 +208,110 @@ h1 {
   color: #333;
   display: block; /* Makes the entire area clickable */
 }
+/*
+=================================
+--- 6. Lesson Page & Content Blocks ---
+=================================
+*/
+
+.lesson-page-container {
+  padding: 30px;
+}
+
+.lesson-content {
+  display: flex;
+  flex-direction: column;
+  gap: 25px; /* Space between content blocks */
+}
+
+.lesson-heading {
+  font-size: 2.2rem;
+  color: #2c3e50;
+  border-bottom: 2px solid #ecf0f1;
+  padding-bottom: 15px;
+}
+
+.lesson-paragraph {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #333;
+}
+
+.code-block-container {
+  border-radius: 8px;
+  overflow: hidden; /* Important for border-radius on highlighter */
+  font-size: 0.95rem;
+}
+
+.video-block-container {
+  background-color: #eaf2f8;
+  border: 1px solid #d4e6f1;
+  border-left: 5px solid #3498db;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.video-block-container h4 {
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+.video-block-container a {
+  color: #2980b9;
+  font-weight: bold;
+}
+
+.mcq-block-container {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.mcq-question {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  color: #34495e;
+}
+
+.mcq-option {
+  padding: 12px;
+  border: 1px solid #dfe4ea;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.mcq-option label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.mcq-option.correct {
+  background-color: #d4efdf;
+  border-color: #28a745;
+}
+
+.mcq-option.incorrect {
+  background-color: #f5b7b1;
+  border-color: #dc3545;
+}
+
+.mcq-submit-button {
+  background-color: #2c3e50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.mcq-submit-button:disabled {
+  background-color: #a4b0be;
+  cursor: not-allowed;
+}

@@ -5,6 +5,20 @@ import Course from '../models/courseModel.js';
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+const getLessonById = async (req, res) => {
+  try {
+    const lesson = await Lesson.findById(req.params.id);
+    if (lesson) {
+      return res.json(lesson);
+    } else {
+      return res.status(404).json({ message: 'Lesson not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching lesson:', error);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
+
 const generateLessonContent = async (req, res) => {
     try{
 
@@ -12,13 +26,20 @@ const generateLessonContent = async (req, res) => {
         // res.status(400).json({ message: lessonId});
         const lesson = await Lesson.findById(lessonId);
         // const course = await Course.findById(lessonId);
+        console.log('Lesson ID:', lessonId);
         if (!lesson) {
         return res.status(404).json({ message: 'Lesson not founddd' ,  id : `${lessonId}` });
         }
 
-        // Find the parent module and course for context
         const module = await Module.findById(lesson.module);
+        if (!module) {
+          return res.status(404).json({ message: 'Parent module not found for this lesson' });
+        }
+
         const course = await Course.findById(module.course);
+        if (!course) {
+          return res.status(404).json({ message: 'Parent course not found for this module' });
+        }
 
         const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
         // ai prompt 
@@ -49,7 +70,7 @@ const generateLessonContent = async (req, res) => {
 
         // api call 
         const result = await model.generateContent(prompt);
-        const response = await result.response;
+        const response = result.response;
         const text = response.text();
 
         // Parse and Save to Database
@@ -64,14 +85,16 @@ const generateLessonContent = async (req, res) => {
             lesson: updatedLesson,
         });
     }
+
     catch(error){
         console.error('Error generating lesson content:', error);
         if (error.message.includes('SAFETY')) {
          return res.status(400).json({ message: 'The topic triggered the AI\'s safety filters. Please try a different topic.' });
         }
+        console.log('Error details:', error);
         res.status(500).json({ message: 'An error occurred on the server while generating lesson content.' });
     }
 
 };
 
-export { generateLessonContent };
+export { generateLessonContent, getLessonById };
