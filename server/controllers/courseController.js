@@ -8,6 +8,16 @@ dotenv.config();
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+const getAllCourses = async (req, res) => {
+  try {
+    const courses = await Course.find({}).sort({ createdAt: -1 });
+    return res.json(courses);
+  } catch (error) {
+    console.error('Error fetching all courses:', error);
+    return res.status(500).json({ message: 'Server error' });
+  }
+};
+
 const generateCourse = async (req, res) => {
   // ... (existing generateCourse function code remains the same)
   const { topic } = req.body;
@@ -127,4 +137,4 @@ const getCourseById = async (req, res) => {
 };
 
 
-export { generateCourse, getCourseById };
+export { generateCourse, getCourseById, getAllCourses };

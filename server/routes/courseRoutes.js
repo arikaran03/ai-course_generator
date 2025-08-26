@@ -1,7 +1,9 @@
 import express from 'express';
-import { generateCourse, getCourseById } from '../controllers/courseController.js'; 
+import { generateCourse, getCourseById, getAllCourses} from '../controllers/courseController.js'; 
 
 const router = express.Router(); 
+
+router.get('/', getAllCourses);
 
 router.post('/generate', generateCourse);
 
