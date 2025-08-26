@@ -5,21 +5,25 @@ import CoursePage from './pages/CoursePage.js';
 import LessonPage from './pages/LessonPage.js';
 import Sidebar from './components/Sidebar.js';
 import NewCoursePage from './pages/NewCoursePage.js';
+import { CourseProvider } from './context/CourseContext.js';
 
 import './App.css';
 
 const App = () => {
   return (
-      <div className='App'>
-        <h1>Text-to-Learn Course Generator</h1>
-        <Sidebar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/new-course" element={<NewCoursePage />} />
-          <Route path="/course/:courseId" element={<CoursePage />} />
-          <Route path="/course/:courseId/lesson/:lessonId" element={<LessonPage />} />
-        </Routes>
-      </div>
+    <CourseProvider>
+          <div className="app-layout">
+            <Sidebar />
+            <main className="main-content">
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/new-course" element={<NewCoursePage />} />
+                <Route path="/course/:courseId" element={<CoursePage />} />
+                <Route path="/course/:courseId/lesson/:lessonId" element={<LessonPage />} />
+              </Routes>
+            </main>
+          </div>
+      </CourseProvider>
     
   );
 }

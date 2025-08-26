@@ -1,23 +1,12 @@
-import {React, useState, useEffect } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
-import axios from 'axios';
+import { useCourses } from '../context/CourseContext.js'; // 1. Import the context hook
 
 const Sidebar = () => {
-  const [courses, setCourses] = useState([]);
-  const [error, setError] = useState('');
+  // 2. Get courses and error directly from the global context
+  const { courses, error } = useCourses();
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/api/courses');
-        setCourses(response.data);
-      } catch (err) {
-        console.error('Failed to fetch courses for sidebar', err);
-        setError('Could not load courses.');
-      }
-    };
-    fetchCourses();
-  }, []);
+  // 3. The useEffect and useState for fetching are no longer needed here!
 
   return (
     <div className="sidebar">
