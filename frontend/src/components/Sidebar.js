@@ -3,11 +3,11 @@ import { NavLink } from 'react-router-dom';
 import { useCourses } from '../context/CourseContext.js'; // 1. Import the context hook
 
 const Sidebar = () => {
-  // 2. Get courses and error directly from the global context
+
+  // 2. Get courses and error directly from the global context\
   const { courses, error } = useCourses();
-
   // 3. The useEffect and useState for fetching are no longer needed here!
-
+  
   return (
     <div className="sidebar">
       <div className="sidebar-header">
