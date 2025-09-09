@@ -208,11 +208,6 @@ h1 {
   color: #333;
   display: block; /* Makes the entire area clickable */
 }
-/*
-=================================
---- 6. Lesson Page & Content Blocks ---
-=================================
-*/
 
 .lesson-page-container {
   padding: 30px;
@@ -244,23 +239,35 @@ h1 {
 }
 
 .video-block-container {
-  background-color: #eaf2f8;
-  border: 1px solid #d4e6f1;
-  border-left: 5px solid #3498db;
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
   padding: 20px;
   border-radius: 8px;
 }
 
 .video-block-container h4 {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   color: #2c3e50;
 }
 
-.video-block-container a {
-  color: #2980b9;
-  font-weight: bold;
+/* New styles for responsive video embed */
+.video-responsive {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
 }
 
+.video-responsive iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+}
 .mcq-block-container {
   background-color: #f8f9fa;
   border: 1px solid #e9ecef;
